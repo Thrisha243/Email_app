@@ -1,0 +1,99 @@
+import java.util.Random;
+
+class Email {
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private int mailboxCapacity = 500; // Default mailbox capacity in MB
+    private String alternateEmail;
+    private static final int DEFAULT_PASSWORD_LENGTH = 8;
+    private String companySuffix = "company.com"; // Company domain
+
+    // Constructor to initialize first name and last name
+    public Email(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = generateRandomPassword(DEFAULT_PASSWORD_LENGTH);
+        this.email = generateEmail();
+    }
+
+    // Method to generate an email ID
+    private String generateEmail() {
+        return firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + companySuffix;
+    }
+
+    // Method to generate a random password
+    private String generateRandomPassword(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder password = new StringBuilder();
+        Random random = new Random();
+        
+        for (int i = 0; i < length; i++) {
+            password.append(chars.charAt(random.nextInt(chars.length())));
+        }
+        return password.toString();
+    }
+
+    // Method to set alternate email
+    public void setAlternateEmail(String altEmail) {
+        this.alternateEmail = altEmail;
+    }
+
+    // Method to get alternate email
+    public String getAlternateEmail() {
+        return alternateEmail;
+    }
+
+    // Method to change the password
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    // Method to retrieve password
+    public String getPassword() {
+        return password;
+    }
+
+    // Method to set mailbox capacity
+    public void setMailboxCapacity(int capacity) {
+        this.mailboxCapacity = capacity;
+    }
+
+    // Method to get mailbox capacity
+    public int getMailboxCapacity() {
+        return mailboxCapacity;
+    }
+
+    // Method to display user information
+    public void displayInfo() {
+        System.out.println("Name: " + firstName + " " + lastName);
+        System.out.println("Email: " + email);
+        System.out.println("Mailbox Capacity: " + mailboxCapacity + "MB");
+        System.out.println("Alternate Email: " + (alternateEmail != null ? alternateEmail : "Not Set"));
+        System.out.println("Password: " + password);
+    }
+}
+
+// Main class
+public class EmailApplication {
+    public static void main(String[] args) {
+        // Creating an Email object
+        Email email1 = new Email("John", "Doe");
+
+        // Display user information
+        email1.displayInfo();
+
+        // Changing password
+        email1.changePassword("NewSecurePass123");
+        System.out.println("\nUpdated Password: " + email1.getPassword());
+
+        // Setting alternate email
+        email1.setAlternateEmail("johndoe@gmail.com");
+        System.out.println("Alternate Email: " + email1.getAlternateEmail());
+
+        // Updating mailbox capacity
+        email1.setMailboxCapacity(1000);
+        System.out.println("Updated Mailbox Capacity: " + email1.getMailboxCapacity() + "MB");
+    }
+}
